@@ -1,0 +1,3 @@
+{
+    "ignoreWords": ["luac", "Protos", "Upvalues", "Upvalue", "Undump"]
+}
