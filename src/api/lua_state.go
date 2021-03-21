@@ -43,12 +43,9 @@ type LuaState interface {
 	PushInteger(n int64)
 	PushNumber(n float64)
 	PushString(s string)
-	// 
+	/* Comparison and arithmetic functions */
 	Arith(op ArithOp)
 	Compare(idx1, idx2 int, op CompareOp) bool
-	Len(idx int)
-	Concat(n int)
-
 	/* get functions (Lua -> stack) */
 	NewTable()
 	CreateTable(nArr, nRec int)
@@ -59,4 +56,10 @@ type LuaState interface {
 	SetTable(idx int)
 	SetField(idx int, k string)
 	SetI(idx int, i int64)
+	/* 'load' and 'call' functions (load and run Lua code) */
+	Load(chunk []byte, chunkName, mode string) int
+	Call(nArgs, nResults int)
+	/* miscellaneous functions */
+	Len(idx int)
+	Concat(n int)
 }
