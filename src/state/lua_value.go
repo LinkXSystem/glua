@@ -7,6 +7,8 @@ type luaValue interface {}
 
 func typeOf(val luaValue) LuaType {
 	switch val.(type) {
+	case *luaTable:
+		return LUA_TTABLE
 	case nil:
 		return LUA_TNIL
 	case bool:
