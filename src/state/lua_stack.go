@@ -1,5 +1,7 @@
 package state
 
+import . "api"
+
 type luaStack struct {
 	/* virtual stack */
 	slots []luaValue
@@ -10,12 +12,15 @@ type luaStack struct {
 	pc      int
 	/* linked list */
 	prev *luaStack
+
+	state *luaState
 }
 
-func newLuaStack(size int) *luaStack {
+func newLuaStack(size int, state *luaState) *luaStack {
 	return &luaStack{
 		slots: make([]luaValue, size),
 		top:   0,
+		state: state,
 	}
 }
 
@@ -75,11 +80,17 @@ func (self *luaStack) absIndex(idx int) int {
 }
 
 func (self *luaStack) isValid(idx int) bool {
+	if idx == LUA_REGISTRYINDEX {
+		return true
+	}
 	absIdx := self.absIndex(idx)
 	return absIdx > 0 && absIdx <= self.top
 }
 
 func (self *luaStack) get(idx int) luaValue {
+	if idx == LUA_REGISTRYINDEX {
+		return true
+	}
 	absIdx := self.absIndex(idx)
 	if absIdx > 0 && absIdx <= self.top {
 		return self.slots[absIdx-1]

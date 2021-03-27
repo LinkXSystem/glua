@@ -62,4 +62,16 @@ type LuaState interface {
 	/* miscellaneous functions */
 	Len(idx int)
 	Concat(n int)
+
+	PushGoFunction(f GoFunction)
+	IsGoFunction(idx int) bool
+	ToGoFunction(idx int) GoFunction
+
+	PushGlobalTable()
+	GetGlobal(name string) LuaType
+	SetGlobal(name string)
+	Register(name string, f GoFunction)
+
 }
+
+type GoFunction func(LuaState) int
